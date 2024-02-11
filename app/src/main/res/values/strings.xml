@@ -3,4 +3,6 @@
     <string name="list_city_text">City : %1$s</string>
     <string name="list_type_text">Type : %1$s</string>
     <string name="list_area_text">Area : %1$s</string>
+    <string name="filter_area_text">Filtrer sur la taille du terrain</string>
+    <string name="common_ok">OK</string>
 </resources>
