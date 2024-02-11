@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kilomobi.aviv.domain.usecase.GetFilteredPropertiesUseCase
 import com.kilomobi.aviv.domain.usecase.GetInitialPropertiesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -13,13 +14,14 @@ import javax.inject.Inject
 @HiltViewModel
 class PropertiesViewModel @Inject constructor(
     private val getInitialPropertiesUseCase: GetInitialPropertiesUseCase,
+    private val getFilteredPropertiesUseCase: GetFilteredPropertiesUseCase,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(
         PropertiesScreenState(
             properties = emptyList(),
             isLoading = true,
-            areaFilter = 100f
+            filterAsc = true
         )
     )
 
@@ -53,9 +55,12 @@ class PropertiesViewModel @Inject constructor(
         }
     }
 
-    fun updateFilterValue(filterValue: Float) {
+    fun updateFilterValue() {
+        val sortAsc = !_state.value.filterAsc
+        val filteredProperties = getFilteredPropertiesUseCase(sortAsc, _state.value.properties)
         _state.value = _state.value.copy(
-            areaFilter = filterValue
+            properties = filteredProperties,
+            filterAsc = sortAsc
         )
     }
 }

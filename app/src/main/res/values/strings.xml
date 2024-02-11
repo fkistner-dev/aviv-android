@@ -2,6 +2,7 @@
     <string name="app_name">aviv</string>
     <string name="filter_area_text">Filtrer sur la taille du terrain</string>
     <string name="common_ok">OK</string>
+    <string name="common_retry">RECHARGER</string>
 
     <!-- List -->
     <string name="list_city_text">📍 %1$s • </string>

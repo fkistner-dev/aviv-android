@@ -53,13 +53,15 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Column {
                                 HeaderScreen(
-                                    filterValue = 600f,
-                                    onFilterAction = { viewModel.updateFilterValue(it) }
+                                    filterAsc = viewModel.state.value.filterAsc,
+                                    onFilterAction = { viewModel.updateFilterValue() }
                                 )
-                                PropertiesScreen(viewModel.state.value, {}, {
-                                    ActivityHelper.selectedProperty = it
+                                PropertiesScreen(
+                                    state = viewModel.state.value,
+                                    loadProperties = { viewModel.loadProperties() }) {
+                                    selectedProperty = it
                                     navController.navigate(DESTINATION_PROPERTY_DETAIL_SCREEN)
-                                }, {})
+                                }
                             }
                         }
                     }
@@ -87,6 +89,6 @@ object ActivityHelper {
 @Composable
 fun PropertiesScreenPreview() {
     AvivTheme {
-        PropertiesScreen(PropertiesScreenState(emptyList(), false, null, 0f), {}, {}, {})
+        PropertiesScreen(PropertiesScreenState(emptyList(), false, null, true), {}, {})
     }
 }

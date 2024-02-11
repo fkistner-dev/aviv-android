@@ -3,6 +3,7 @@ package com.kilomobi.aviv.presentation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.kilomobi.aviv.R
 
 @Composable
-fun HeaderScreen(filterValue: Float, onFilterAction: (Float) -> Unit) {
+fun HeaderScreen(filterAsc: Boolean, onFilterAction: () -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,11 +39,11 @@ fun HeaderScreen(filterValue: Float, onFilterAction: (Float) -> Unit) {
                     .weight(1f)
             )
             IconButton(
-                onClick = { },
+                onClick = onFilterAction,
                 modifier = Modifier.padding(end = 16.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowDropDown,
+                    imageVector = if (filterAsc) Icons.Filled.ArrowDropDown else Icons.Filled.KeyboardArrowUp,
                     contentDescription = "filter",
                     tint = Color.White
                 )

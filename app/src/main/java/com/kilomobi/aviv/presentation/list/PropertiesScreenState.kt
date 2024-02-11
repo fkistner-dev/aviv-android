@@ -6,5 +6,5 @@ data class PropertiesScreenState(
     val properties: List<Property>,
     val isLoading: Boolean,
     val error: String? = null,
-    val areaFilter: Float,
+    val filterAsc: Boolean,
 )
