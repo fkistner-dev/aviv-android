@@ -1,7 +1,9 @@
 package com.kilomobi.aviv.data
 
+import com.kilomobi.aviv.data.di.IoDispatcher
 import com.kilomobi.aviv.data.remote.AvivApiService
 import com.kilomobi.aviv.domain.Property
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -11,6 +13,7 @@ import javax.inject.Inject
 
 class PropertiesRepository @Inject constructor(
     private val restInterface: AvivApiService,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
     private var _properties = listOf<Property>()
 
