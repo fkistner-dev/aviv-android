@@ -3,7 +3,7 @@ Aviv is an Android application developed using Kotlin and Android Studio Hedgeho
 The app is written in Kotlin, with Jetpack Compose. It retrieves data from GSL.
 It is composed of a list and a detail-view.
 
-![app](https://s13.gifyu.com/images/SCtgM.gif)
+<img src="/aviv-demo.gif?raw=true" width="360" title="aviv-demo" alt="gif">
 
 ## Getting Started
 To get started with the Aviv App, follow these steps:
