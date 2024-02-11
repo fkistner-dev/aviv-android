@@ -7,5 +7,5 @@ interface AvivApiService {
     suspend fun getProperties(): RemoteProperties
 
     @GET("listings/{id}.json")
-    suspend fun getProperty(): RemoteProperty
+    suspend fun getProperty(id: Int): RemoteProperty
 }

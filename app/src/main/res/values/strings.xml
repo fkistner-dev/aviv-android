@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">aviv</string>
-    <string name="list_city_text">City : %1$s</string>
-    <string name="list_type_text">Type : %1$s</string>
-    <string name="list_area_text">Area : %1$s</string>
     <string name="filter_area_text">Filtrer sur la taille du terrain</string>
     <string name="common_ok">OK</string>
+
+    <!-- List -->
+    <string name="list_city_text">Ville : %1$s</string>
+    <string name="list_type_text">Type : %1$s</string>
+    <string name="list_area_text">Surface : %1$s</string>
+
+    <!-- Details -->
+    <string name="details_bedrooms_text">Chambres : %1$s</string>
+    <string name="details_city_text">Ville : %1$s</string>
+    <string name="details_area_text">Surface : %1$s</string>
+    <string name="details_area_unit_text">hectares</string>
+    <string name="details_price_text">Prix : %1$s</string>
+    <string name="details_price_symbol_text">€</string>
+    <string name="details_professional_text">Groupe : %1$s</string>
+    <string name="details_property_type_text">Type : %1$s</string>
+    <string name="details_offer_type_text">Offre : %1$s</string>
+    <string name="details_rooms_text">Pièces : %1$s</string>
 </resources>

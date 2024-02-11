@@ -1,6 +1,7 @@
 package com.kilomobi.aviv.presentation.list
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.kilomobi.aviv.R
 import com.kilomobi.aviv.domain.Property
+import com.kilomobi.aviv.presentation.MockContent
 
 @Composable
 fun PropertiesScreen(
@@ -35,20 +37,23 @@ fun PropertiesScreen(
     LazyColumn {
         if (state.properties.isNotEmpty()) {
             items(state.properties) {
-                PropertyCard(property = it)
+                PropertyCard(property = it, onPropertyClick)
             }
         }
     }
 }
 
 @Composable
-fun PropertyCard(property: Property) {
+fun PropertyCard(property: Property, onPropertyClick: (Property) -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.AvivWhite)),
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))
+            .clickable {
+                onPropertyClick(property)
+            }
     ) {
         Column(
             modifier = Modifier
@@ -89,18 +94,6 @@ fun ListText(text: String, modifier: Modifier = Modifier, fontWeight: FontWeight
 @Preview(showBackground = true)
 @Composable
 fun PreviewPropertyCard() {
-    val property = Property(
-        bedrooms = 4,
-        city = "Villers-sur-Mer",
-        id = 1,
-        area = 250.0,
-        imageUrl = "https://v.seloger.com/s/crop/590x330/visuels/1/7/t/3/17t3fitclms3bzwv8qshbyzh9dw32e9l0p0udr80k.jpg",
-        price = 1500000.0,
-        professional = "GSL EXPLORE",
-        propertyType = "Maison - Villa",
-        offerType = 1,
-        rooms = 8
-    )
-
-    PropertyCard(property = property)
+    val property = MockContent.getProperty()
+    PropertyCard(property = property, {})
 }
