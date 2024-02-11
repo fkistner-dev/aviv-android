@@ -4,38 +4,16 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kilomobi.aviv.data.remote.AvivApiService
-import com.kilomobi.aviv.data.remote.RemoteProperties
-import com.kilomobi.aviv.domain.Property
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.kilomobi.aviv.domain.usecase.GetInitialPropertiesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
 @HiltViewModel
 class PropertiesViewModel @Inject constructor(
-    // TODO : later DI
+    private val getInitialPropertiesUseCase: GetInitialPropertiesUseCase,
 ) : ViewModel() {
-
-    private var restInterface: AvivApiService
-
-    init {
-        val moshi =
-            Moshi.Builder()
-                .addLast(KotlinJsonAdapterFactory())
-                .build()
-
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://gsl-apps-technical-test.dignp.com/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-        restInterface = retrofit.create(AvivApiService::class.java)
-    }
 
     private val _state = mutableStateOf(
         PropertiesScreenState(
@@ -62,23 +40,10 @@ class PropertiesViewModel @Inject constructor(
 
     fun loadProperties() {
         viewModelScope.launch(errorHandler) {
-            val remoteList = restInterface.getProperties()
-            if (remoteList.properties?.isNotEmpty() == true) {
+            val remoteList = getInitialPropertiesUseCase()
+            if (remoteList.isNotEmpty()) {
                 _state.value = _state.value.copy(
-                    properties = remoteList.properties.map { remoteProperty ->
-                        Property(
-                            remoteProperty.bedrooms,
-                            remoteProperty.city,
-                            remoteProperty.id,
-                            remoteProperty.area,
-                            remoteProperty.imageUrl,
-                            remoteProperty.price,
-                            remoteProperty.professional,
-                            remoteProperty.propertyType,
-                            remoteProperty.offerType,
-                            remoteProperty.rooms
-                        )
-                    },
+                    properties = remoteList,
                     isLoading = false,
                     error = null
                 )
