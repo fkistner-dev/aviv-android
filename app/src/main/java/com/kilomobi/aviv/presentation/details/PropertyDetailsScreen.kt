@@ -1,26 +1,37 @@
 package com.kilomobi.aviv.presentation.details
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.kilomobi.aviv.R
 import com.kilomobi.aviv.domain.Property
 import com.kilomobi.aviv.presentation.MockContent
-import com.kilomobi.aviv.presentation.formatArea
+import com.kilomobi.aviv.presentation.PropertyHighlightText
 import com.kilomobi.aviv.presentation.formatPrice
+import com.kilomobi.aviv.presentation.generateDescription
 
 @Composable
 fun PropertyDetailScreen(property: Property) {
@@ -38,57 +49,51 @@ fun PropertyDetailScreen(property: Property) {
                 contentScale = ContentScale.Crop
             )
         }
-        DetailsText(
-            text = stringResource(id = R.string.details_city_text, property.city)
-        )
-        property.price?.let {
-            DetailsText(
-                text = stringResource(
-                    id = R.string.details_price_text, it.formatPrice(
-                        stringResource(id = R.string.details_price_symbol_text)
-                    )
+        PropertyHighlightText(property)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            property.price?.let {
+                DetailsText(
+                    text = stringResource(
+                        id = R.string.details_price_text, it.formatPrice(
+                            stringResource(id = R.string.details_price_symbol_text)
+                        )
+                    ),
+                    color = colorResource(id = R.color.AvivBlack),
+                    style = MaterialTheme.typography.headlineLarge
                 )
-            )
+            }
         }
-        DetailsText(
-            text = stringResource(
-                id = R.string.details_area_text, property.area.formatArea(
-                    stringResource(id = R.string.details_area_unit_text)
-                )
-            )
-        )
-        property.bedrooms?.let {
+
+        if (property.propertyType?.isNotEmpty() == true) {
             DetailsText(
-                text = stringResource(id = R.string.details_bedrooms_text, it)
+                text = stringResource(R.string.list_type_text, property.propertyType),
+                color = colorResource(id = R.color.AvivBlack)
             )
+            Spacer(modifier = Modifier.width(4.dp))
         }
-        property.rooms?.let {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.AvivRed)),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .clip(RoundedCornerShape(16.dp))
+        ) {
             DetailsText(
-                text = stringResource(id = R.string.details_rooms_text, it)
+                text = property.generateDescription()
             )
         }
-        property.professional?.let {
-            DetailsText(
-                text = stringResource(id = R.string.details_professional_text, it)
-            )
-        }
-        property.propertyType?.let {
-            DetailsText(
-                text = stringResource(id = R.string.details_property_type_text, it)
-            )
-        }
-        DetailsText(
-            text = stringResource(id = R.string.details_offer_type_text, property.offerType)
-        )
     }
 }
 
 @Composable
-fun DetailsText(text: String) {
+fun DetailsText(text: String, color: Color = Color.White, style: TextStyle = MaterialTheme.typography.bodyLarge) {
     Text(
         text = text,
-        style = MaterialTheme.typography.bodyLarge,
-        color = Color.Black,
+        style = style,
+        color = color,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
     )
 }

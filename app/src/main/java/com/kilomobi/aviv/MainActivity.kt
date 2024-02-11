@@ -3,9 +3,8 @@ package com.kilomobi.aviv
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -17,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kilomobi.aviv.ActivityHelper.selectedProperty
 import com.kilomobi.aviv.domain.Property
 import com.kilomobi.aviv.presentation.HeaderScreen
 import com.kilomobi.aviv.presentation.details.PropertyDetailScreen
@@ -64,11 +64,14 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     composable(
-                        route = DESTINATION_PROPERTY_DETAIL_SCREEN,
-                        enterTransition = { slideInHorizontally(animationSpec = tween(500)) },
-                        exitTransition = { slideOutHorizontally(animationSpec = tween(500)) },
+                        route = DESTINATION_PROPERTY_DETAIL_SCREEN
                     ) { _ ->
-                        PropertyDetailScreen(ActivityHelper.selectedProperty!!)
+                        Crossfade(
+                            targetState = selectedProperty,
+                            animationSpec = tween(durationMillis = 500), label = "anim"
+                        ) { property ->
+                            property?.let { PropertyDetailScreen(it) }
+                        }
                     }
                 }
             }

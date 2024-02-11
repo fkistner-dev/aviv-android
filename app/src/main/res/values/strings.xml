@@ -4,16 +4,16 @@
     <string name="common_ok">OK</string>
 
     <!-- List -->
-    <string name="list_city_text">Ville : %1$s</string>
-    <string name="list_type_text">Type : %1$s</string>
-    <string name="list_area_text">Surface : %1$s</string>
+    <string name="list_city_text">📍 %1$s • </string>
+    <string name="list_type_text">🏠 %1$s</string>
+    <string name="list_area_text">%1$s</string>
 
     <!-- Details -->
     <string name="details_bedrooms_text">Chambres : %1$s</string>
     <string name="details_city_text">Ville : %1$s</string>
     <string name="details_area_text">Surface : %1$s</string>
     <string name="details_area_unit_text">hectares</string>
-    <string name="details_price_text">Prix : %1$s</string>
+    <string name="details_price_text">%1$s</string>
     <string name="details_price_symbol_text">€</string>
     <string name="details_professional_text">Groupe : %1$s</string>
     <string name="details_property_type_text">Type : %1$s</string>
