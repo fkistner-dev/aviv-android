@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="AvivBlack">#2A2A2A</color>
+    <color name="AvivWhite">#FFFFFFFF</color>
+    <color name="AvivRed">#E00034</color>
+</resources>
